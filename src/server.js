@@ -38,16 +38,29 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/cadastro', cadastroRoutes);
-app.use('/api/cadastrogoogle', cadastroGoogleRoutes);
-app.use('/catalogacao', catalogadosRoutes);
+// app.use('/api/cadastro', cadastroRoutes);
+// app.use('/api/cadastrogoogle', cadastroGoogleRoutes);
+// app.use('/catalogacao', catalogadosRoutes);
 
 app.get('/', (req, res) => {
     res.json({
         status: 'ok',
         message: `O servidor da Elite Wolf está rodando`
     })
-})
+});
+
+app.use((req, res, next) => {
+    const erro = new Error('Não encontrado')
+    erro.status = 404;
+    next(erro);
+});
+
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    return res.json({
+        erro: error.message
+    });
+});
 
 app.listen(port, hostname, () => {
     console.log(`O servidor da Elite Wolf está rodando em: http://${hostname}:${port}`);
