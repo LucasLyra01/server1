@@ -31,6 +31,14 @@ app.use((req, res, next) => {
     next();
 });
 
+const cadastroRoutes = require('./routes/cadastro-routes');
+const cadastroGoogleRoutes = require('./routes/cadastro-google-routes');
+const catalogadosRoutes = require('./routes/catalogados-routes')
+
+app.use('/api/cadastro', cadastroRoutes);
+app.use('/api/cadastrogoogle', cadastroGoogleRoutes);
+app.use('/catalogacao', catalogadosRoutes);
+
 app.get('/', (req, res) => {
     res.send({
         status: 'ok',
