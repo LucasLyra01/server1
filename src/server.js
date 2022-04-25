@@ -4,8 +4,8 @@ require('dotenv').config({
 
 const express = require('express');
 const cors = require('cors');
-const mongodb = require('./infra/mongodb');
-const catalogador = require('../robo/index');
+// const mongodb = require('./infra/mongodb');
+// const catalogador = require('../robo/index');
 const app = express();
 
 try {
