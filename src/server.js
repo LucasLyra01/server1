@@ -8,13 +8,6 @@ const cors = require('cors');
 // const catalogador = require('../robo/index');
 const app = express();
 
-try {
-    catalogacao();
-    console.log(catalogacao);
-} catch (error) {
-    
-}
-
 const port = process.env.APP_PORT;
 const hostname = process.env.APP_HOSTNAME;
 
@@ -29,6 +22,21 @@ app.use(express.urlencoded({
 }))
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Header',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+
+    if(req.methods === 'OPTIONS'){
+        res.header('Access-Control-Allow-Methods', 'PUT, ´POST, PATCH, DELETE, GET');
+        return res.status(200).send({});
+    }
+
+    next();
+});
 
 app.use('/api/cadastro', cadastroRoutes);
 app.use('/api/cadastrogoogle', cadastroGoogleRoutes);
